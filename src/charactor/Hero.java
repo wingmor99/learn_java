@@ -16,7 +16,7 @@ public abstract class Hero {
         System.out.println("Hero created");
     }
 
-    public Hero(){
+    public Hero() {
         System.out.println("Hero的无参的构造方法 ");
     }
 
@@ -32,12 +32,13 @@ public abstract class Hero {
     int moneyLeft;
     int hasHead;
     static String copyright;
-    float maxHP; {
+    float maxHP;
+
+    {
         maxHP = 200;
     }
 
     public static final int itemCapcity = 6;
-
 
 
     // 类的方法， 无返回值， 所以viod
@@ -70,7 +71,6 @@ public abstract class Hero {
     }
 
 
-
     void getName1(String name) {
         name = name;
         System.out.println(name);
@@ -86,7 +86,7 @@ public abstract class Hero {
         xp = 0;
     }
 
-//    public void attack(Hero hero, int damage) {
+    //    public void attack(Hero hero, int damage) {
 //        hero.hp = hero.hp - damage;
 //    }
     public void equip(Weapon w) {
@@ -144,23 +144,25 @@ public abstract class Hero {
     }
 
     // 静态内部类
-    static class EnemyCrystall{
+    static class EnemyCrystall {
         int hp = 5000;
 
         public void checkIfVictory() {
             if (hp == 0) {
                 Hero.battleWin();
                 System.out.println("win this game.");
-            }
-            else {
+            } else {
                 System.out.println("still doesn't win this game.");
             }
         }
     }
 
-    // 匿名类
-
-
+    // 自定义异常
+    public void attackHero(Hero h) throws EnemyHeroIsDeadException {
+        if (h.hp == 0) {
+            throw new EnemyHeroIsDeadException(h.name + "以及挂了");
+        }
+    }
 
 
     // 创建新类
@@ -168,7 +170,7 @@ public abstract class Hero {
 
         Hero.copyright = "Riot Games";
 
-        Hero garen = new ADHero("盖伦",616.28f, 27.536f, 350);
+        Hero garen = new ADHero("盖伦", 616.28f, 27.536f, 350);
 
         // 给盖伦加速
         garen.addSpeed(100);
@@ -213,9 +215,9 @@ public abstract class Hero {
         ((ADHero) garen).bekilled(teemo);
 
 
-        ADHero rw = new ADHero("锐雯",616.28f, 27.536f, 500);
-        APHero gh = new APHero("光辉",616.28f, 27.536f, 350);
-        ADAPHero kq = new ADAPHero("库奇",616.28f, 27.536f, 350);
+        ADHero rw = new ADHero("锐雯", 616.28f, 27.536f, 500);
+        APHero gh = new APHero("光辉", 616.28f, 27.536f, 350);
+        ADAPHero kq = new ADAPHero("库奇", 616.28f, 27.536f, 350);
         System.out.println("round 1");
         rw.kill(gh);
         System.out.println("round 2");
@@ -232,7 +234,7 @@ public abstract class Hero {
 
             }
         };
-        new ADHero("锐雯",616.28f, 27.536f, 350);
+        new ADHero("锐雯", 616.28f, 27.536f, 350);
 
         Hero h1 = new Hero() {
             @Override
@@ -281,7 +283,21 @@ public abstract class Hero {
 
         damege = 19;
 
+        Hero deadTeemo = new Hero("提莫", 0, 14f, 330) {
+
+            @Override
+            public void attack() {
+
+            }
+        };
+
+        try {
+            garen.attackHero(deadTeemo);
+
+        } catch (EnemyHeroIsDeadException e) {
+            System.out.println("异常原因：" + e.getMessage());
+            e.printStackTrace();
+        }
 
     }
-
 }
