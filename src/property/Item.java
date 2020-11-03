@@ -15,6 +15,10 @@ public class Item {
 //    public abstract void disposable() {
 //
 //    }
+    public Item(String name) {
+        this.name = name;
+    }
+    public Item() {}
 
     public static void main(String[] args) {
         Item bloodbutton = new Item();

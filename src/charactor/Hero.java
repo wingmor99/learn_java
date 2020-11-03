@@ -5,6 +5,8 @@ import property.Item;
 import property.MagicPotion;
 import property.LifePotion;
 
+import java.util.ArrayList;
+
 public abstract class Hero {
 
     public Hero(String name, float heroHP,
@@ -14,6 +16,10 @@ public abstract class Hero {
         armor = heroArmor;
         moveSpeed = heroMoveSpeed;
         System.out.println("Hero created");
+    }
+
+    public Hero(String name) {
+        this.name = name;
     }
 
     public Hero() {
@@ -164,6 +170,11 @@ public abstract class Hero {
         }
     }
 
+//    @Override
+//    public String toString() {
+//        return name;
+//    }
+
 
     // 创建新类
     public static void main(String[] args) {
@@ -298,6 +309,16 @@ public abstract class Hero {
             System.out.println("异常原因：" + e.getMessage());
             e.printStackTrace();
         }
+
+
+        /**
+         * 泛型容器
+         */
+        ArrayList<APHero> heros = new ArrayList<APHero>();
+
+        heros.add(new APHero("锐雯", 616.28f, 27.536f, 500));
+
+        APHero apHero = heros.get(0);
 
     }
 }

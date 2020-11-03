@@ -6,6 +6,10 @@ public class APHero extends Hero implements AP , Mortal{
         super(name, heroHP, heroArmor, heroMoveSpeed);
     }
 
+    public APHero() {
+
+    }
+
     @Override
     public void magicAttack() {
         System.out.println(this.name + "进行了魔法攻击");
