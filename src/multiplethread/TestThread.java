@@ -13,46 +13,101 @@ public class TestThread {
         /**
          * 创建线程， 然后run
          */
-        KillThread killThread1 = new KillThread(gareen, teemo);
-        KillThread killThread2 = new KillThread(bh, leesin);
+//        KillThread killThread1 = new KillThread(gareen, teemo);
+//        KillThread killThread2 = new KillThread(bh, leesin);
 //        killThread1.start();
 //        killThread2.start();
 
         /**
          * Runnable接口
          */
-        System.out.println("Runnable 接口============");
-        Battle battle1 = new Battle(gareen, teemo);
-        new Thread(battle1).start();
-
-        Battle battle2 = new Battle(bh, leesin);
-        new Thread(battle2).start();
+//        System.out.println("Runnable 接口============");
+//        Battle battle1 = new Battle(gareen, teemo);
+//        new Thread(battle1).start();
+//
+//        Battle battle2 = new Battle(bh, leesin);
+//        new Thread(battle2).start();
 
         /**
          * 匿名类
          */
-//        Thread t1 = new Thread() {
-//            @Override
-//            public void run() {
-//                while(!teemo.isDead()) {
-//                    gareen.attackHero(teemo);
-//                }
-//            }
-//        };
+        Thread t1 = new Thread() {
+            @Override
+            public void run() {
+                while(!teemo.isDead()) {
+                    gareen.attackHero(teemo);
+                }
+            }
+        };
 //
 //        t1.start();
 //
-//        Thread t2 = new Thread() {
-//            @Override
-//            public void run() {
-//                while(!leesin.isDead()) {
-//                    bh.attackHero(leesin);
-//                }
-//            }
-//        };
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                while(!leesin.isDead()) {
+                    bh.attackHero(leesin);
+                }
+            }
+        };
 //
 //        t2.start();
 
+
+        Thread t3 = new Thread() {
+            @Override
+            public void run() {
+                int seconds = 0;
+                while (seconds < 3) {
+                    try {
+                        Thread.sleep(3);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("玩了LOL" + seconds + "秒");
+                    seconds++ ;
+                }
+
+            }
+        };
+
+//        t3.start();
+//
+//        t1.start();
+
+        //代码是主线程
+        try {
+            // 吧t1加入到主线程
+            t1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        t2.start();
+
+        Thread t4 = new Thread() {
+            @Override
+            public void run() {
+                int seconds = 1;
+                while (seconds < 4) {
+                    System.out.println("第" + seconds + "发波动拳");
+                    try {
+                        Thread.sleep(1000);
+                        if (seconds == 3){
+                            System.out.println("开始充能");
+                            Thread.sleep(2000);
+                            seconds = 0;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    seconds++;
+                }
+
+            }
+        };
+
+//        t4.start();
 
 
     }
