@@ -4,6 +4,10 @@ import charactor.SimpleHero;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class TestThread {
     public static String now(){
@@ -191,7 +195,7 @@ public class TestThread {
 
             }
         };
-        t7.start();
+//        t7.start();
 
         Thread t8 = new Thread(){
             @Override
@@ -210,8 +214,41 @@ public class TestThread {
 
             }
         };
-        t8.start();
+//        t8.start();
 
+
+        /**
+         * 线程池 ThreadPool
+         */
+        ThreadPool pool = new ThreadPool();
+//        for (int i = 0; i < 5; i++) {
+//            Runnable task = new Runnable() {
+//                @Override
+//                public void run() {
+//                    //System.out.println("执行任务");
+//                    //任务可能是打印一句话
+//                    //可能是访问文件
+//                    //可能是做排序
+//                }
+//            };
+//
+//            pool.add(task);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(10,15, 60,
+                TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+        threadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("任务1");
+            }
+        });
 
 
 
