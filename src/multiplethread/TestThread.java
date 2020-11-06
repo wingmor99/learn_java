@@ -15,8 +15,45 @@ public class TestThread {
          */
         KillThread killThread1 = new KillThread(gareen, teemo);
         KillThread killThread2 = new KillThread(bh, leesin);
-        killThread1.start();
-        killThread2.start();
+//        killThread1.start();
+//        killThread2.start();
+
+        /**
+         * Runnable接口
+         */
+        System.out.println("Runnable 接口============");
+        Battle battle1 = new Battle(gareen, teemo);
+        new Thread(battle1).start();
+
+        Battle battle2 = new Battle(bh, leesin);
+        new Thread(battle2).start();
+
+        /**
+         * 匿名类
+         */
+//        Thread t1 = new Thread() {
+//            @Override
+//            public void run() {
+//                while(!teemo.isDead()) {
+//                    gareen.attackHero(teemo);
+//                }
+//            }
+//        };
+//
+//        t1.start();
+//
+//        Thread t2 = new Thread() {
+//            @Override
+//            public void run() {
+//                while(!leesin.isDead()) {
+//                    bh.attackHero(leesin);
+//                }
+//            }
+//        };
+//
+//        t2.start();
+
+
 
     }
 }
