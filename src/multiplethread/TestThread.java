@@ -2,7 +2,13 @@ package multiplethread;
 
 import charactor.SimpleHero;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TestThread {
+    public static String now(){
+        return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    }
 
     public static void main(String[] args) {
         SimpleHero gareen = new SimpleHero("盖伦", 616, 50);
@@ -108,6 +114,58 @@ public class TestThread {
         };
 
 //        t4.start();
+
+        System.out.println("盖伦初始血量是" + gareen.hp);
+        /**
+         * 占用对象， 线程安全类： 一次只有一个线程可以占用对象
+         * https://how2j.cn/k/thread/thread-synchronized/355.html#nowhere
+         */
+        final Object someObject = new Object();
+
+        Thread t5 = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    System.out.println( now()+" t5 线程已经运行");
+                    System.out.println( now()+this.getName()+ " 试图占有对象：someObject");
+                    synchronized (someObject) {
+
+                        System.out.println( now()+this.getName()+ " 占有对象：someObject");
+                        Thread.sleep(5000);
+                        System.out.println( now()+this.getName()+ " 释放对象：someObject");
+                    }
+                    System.out.println(now()+" t5 线程结束");
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        };
+        t5.setName(" t5");
+//        t5.start();
+
+        Thread t6 = new Thread(){
+
+            public void run(){
+                try {
+                    System.out.println( now()+" t6 线程已经运行");
+                    System.out.println( now()+this.getName()+ " 试图占有对象：someObject");
+                    synchronized (someObject) {
+                        System.out.println( now()+this.getName()+ " 占有对象：someObject");
+                        Thread.sleep(5000);
+                        System.out.println( now()+this.getName()+ " 释放对象：someObject");
+                    }
+                    System.out.println(now()+" t6 线程结束");
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        };
+        t6.setName(" t6");
+//        t6.start();
+
+
 
 
     }

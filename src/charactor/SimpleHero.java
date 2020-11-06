@@ -31,5 +31,18 @@ public class SimpleHero {
         h2.hp -= damage;
         System.out.println(this.name + "攻击了" + h2.name + "伤害" + damage + ", " +
                 h2.name + "的血变成了" + h2.hp);
+        if (h2.isDead()) {
+            System.out.println(h2.name + "被打死了！");
+        }
     }
+
+    public void hurt() {
+        this.hp = hp - 1;
+    }
+
+    public void recover() {
+        this.hp = hp + 1;
+    }
+
+
 }
