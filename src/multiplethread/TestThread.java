@@ -8,10 +8,16 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class TestThread {
     public static String now(){
         return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    }
+
+    public static void log(String msg) {
+        System.out.printf("%s %s %s %n", now() , Thread.currentThread().getName() , msg);
     }
 
     public static void main(String[] args) {
@@ -250,7 +256,66 @@ public class TestThread {
             }
         });
 
+        /**
+         * use lock, 一定要unlock才会释放
+         */
+        Lock lock = new ReentrantLock();
 
+        Thread t9 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    log("线程启动");
+                    log("试图占有对象：lock");
 
+                    lock.lock();
+
+                    log("占有对象：lock");
+                    log("进行5秒的业务操作");
+                    Thread.sleep(5000);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    log("释放对象：lock");
+                    lock.unlock();
+                }
+                log("线程结束");
+            }
+        };
+        t9.setName("t1");
+        t9.start();
+        try {
+            //先让t1飞2秒
+            Thread.sleep(2000);
+        } catch (InterruptedException e1) {
+// TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        Thread t10 = new Thread() {
+
+            public void run() {
+                try {
+                    log("线程启动");
+                    log("试图占有对象：lock");
+
+                    lock.lock();
+
+                    log("占有对象：lock");
+                    log("进行5秒的业务操作");
+                    Thread.sleep(5000);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    log("释放对象：lock");
+                    lock.unlock();
+                }
+                log("线程结束");
+            }
+        };
+        t10.setName("t2");
+        t10.start();
     }
+
 }
