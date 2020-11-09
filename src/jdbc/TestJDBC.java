@@ -7,7 +7,7 @@ public class TestJDBC {
         Connection c = null;
         Statement s = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             // 建立与数据库的Connection连接
             // 这里需要提供：
@@ -65,35 +65,59 @@ public class TestJDBC {
 
     public static void main(String[] args) {
 //        execute("insert into user values(null,'dashen','thisispassword');");
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        try (Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8",
+//                "root", "Qq199512");
+//             Statement s = c.createStatement();) {
+//            String sql = "SELECT * FROM user WHERE name = \"dashen\" AND password = \"thisispassword\";\n";
+//            // 执行查询， 把结果返回给ResultSet
+//            ResultSet rs = s.executeQuery(sql);
+//
+//            // 打印所有数据
+////            while (rs.next()) {
+////                int id = rs.getInt("id");
+////                String name = rs.getString(2);
+////                float hp = rs.getFloat("hp");
+////                int damage = rs.getInt(4);
+////                System.out.printf("%d\t%s\t%f\t%d%n", id, name, hp, damage);
+////            }
+//
+//            // 检查user 对不对
+//            if (rs.next()) {
+//                System.out.println("密码正确");
+//            } else {
+//                System.out.println("密码错误");
+//            }
+//
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+
+        /**
+         * PreparedStatement
+         */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+        String sql = "INSERT INTO hero VALUES(null, ?, ?, ?)";
         try (Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8",
-                "root", "Qq199512"); Statement s = c.createStatement();) {
-            String sql = "SELECT * FROM user WHERE name = \"dashen\" AND password = \"thisispassword\";\n";
-            // 执行查询， 把结果返回给ResultSet
-            ResultSet rs = s.executeQuery(sql);
-
-            // 打印所有数据
-//            while (rs.next()) {
-//                int id = rs.getInt("id");
-//                String name = rs.getString(2);
-//                float hp = rs.getFloat("hp");
-//                int damage = rs.getInt(4);
-//                System.out.printf("%d\t%s\t%f\t%d%n", id, name, hp, damage);
-//            }
-
-            // 检查user 对不对
-            if (rs.next()) {
-                System.out.println("密码正确");
-            } else {
-                System.out.println("密码错误");
-            }
-
-
+                "root", "Qq199512");
+             Statement s = c.createStatement();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ) {
+            // 用 PreparedStatement进行参数设置
+            ps.setString(1, "蛮王");
+            ps.setFloat(2, 540.0f);
+            ps.setInt(3, 50);
+            ps.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
