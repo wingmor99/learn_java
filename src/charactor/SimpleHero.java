@@ -1,6 +1,7 @@
 package charactor;
 
 public class SimpleHero {
+    public int id;
     public String name;
     public float hp;
     public int damage;
@@ -14,6 +15,7 @@ public class SimpleHero {
     public SimpleHero(String s){
         this.name = s;
     }
+    public SimpleHero() {}
 
     @Override
     public String toString() {

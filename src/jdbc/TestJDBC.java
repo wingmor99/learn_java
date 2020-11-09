@@ -1,5 +1,7 @@
 package jdbc;
 
+import charactor.SimpleHero;
+
 import java.sql.*;
 
 public class TestJDBC {
@@ -59,11 +61,10 @@ public class TestJDBC {
                 }
             }
         }
-
     }
 
-
-    public static void main(String[] args) {
+    public static SimpleHero get(int id) {
+        SimpleHero hero = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -74,22 +75,32 @@ public class TestJDBC {
                 "jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8",
                 "root", "Qq199512");
              Statement s = c.createStatement();
-             ) {
-            /**
-             * 事务，要么都运行，要么都不运行
-             */
-            c.setAutoCommit(false);
+        ) {
+            String sql = "SELECT * FROM hero WHERE id = " + id;
+            ResultSet rs = s.executeQuery(sql);
 
-            // 加血
-            String sqlAdd = "UPDATE hero SET hp = hp + 1 WHERE id = 1;";
-            String sqlDec = "UPDATE hero SET hp = hp - 1 WHERE id = 1;";
-            s.execute(sqlAdd);
-            s.execute(sqlDec);
-
-            c.commit();
+            // id 唯一
+            if (rs.next()){
+                hero = new SimpleHero();
+                String name = rs.getString(2);
+                float hp = rs.getFloat("hp");
+                int damage = rs.getInt(4);
+                hero.name = name;
+                hero.hp = hp;
+                hero.damage = damage;
             }
-         catch (SQLException throwables) {
+
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        return hero;
+    }
+
+
+
+    public static void main(String[] args) {
+        SimpleHero h = get(5);
+        System.out.println(h.name);
     }
 }
