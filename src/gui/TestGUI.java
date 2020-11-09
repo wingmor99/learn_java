@@ -19,37 +19,14 @@ public class TestGUI {
         l.setBounds(375, 275, i.getIconWidth(), i.getIconHeight());
 
         f.add(l);
-        l.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
+        l.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 Random r = new Random();
-
                 int x = r.nextInt(f.getWidth() - l.getWidth());
                 int y = r.nextInt(f.getHeight() - l.getHeight());
-
                 l.setLocation(x, y);
                 System.out.println("mouse entered");
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
             }
         });
 
