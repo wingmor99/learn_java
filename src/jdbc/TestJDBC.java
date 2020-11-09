@@ -107,18 +107,44 @@ public class TestJDBC {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+//        String sql = "INSERT INTO hero VALUES(null, ?, ?, ?)";
         String sql = "INSERT INTO hero VALUES(null, ?, ?, ?)";
         try (Connection c = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/how2java?characterEncoding=UTF-8",
                 "root", "Qq199512");
-             Statement s = c.createStatement();
-             PreparedStatement ps = c.prepareStatement(sql);
+//             Statement s = c.createStatement();
+//             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
              ) {
             // 用 PreparedStatement进行参数设置
-            ps.setString(1, "蛮王");
-            ps.setFloat(2, 540.0f);
-            ps.setInt(3, 50);
-            ps.execute();
-        } catch (SQLException throwables) {
+//            ps.setString(1, "赵信");
+//            ps.setFloat(2, 540.0f);
+//            ps.setInt(3, 50);
+//            ps.execute();
+
+//            ResultSet rs = ps.getGeneratedKeys();
+//            if (rs.next()) {
+//                int id = rs.getInt(1);
+//                System.out.println(id);
+            // 查看元数据
+            DatabaseMetaData dbmd = c.getMetaData();
+            // 获取数据库服务器产品名称
+            System.out.println("数据库产品名称:\t"+dbmd.getDatabaseProductName());
+            // 获取数据库服务器产品版本号
+            System.out.println("数据库产品版本:\t"+dbmd.getDatabaseProductVersion());
+            // 获取数据库服务器用作类别和表名之间的分隔符 如test.user
+            System.out.println("数据库和表分隔符:\t"+dbmd.getCatalogSeparator());
+            // 获取驱动版本
+            System.out.println("驱动版本:\t"+dbmd.getDriverVersion());
+
+            System.out.println("可用的数据库列表：");
+            // 获取数据库名称
+            ResultSet rs = dbmd.getCatalogs();
+
+            while (rs.next()) {
+                System.out.println("数据库名称:\t"+rs.getString(1));
+            }
+
+            }
+         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
