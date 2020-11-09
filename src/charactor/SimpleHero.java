@@ -19,7 +19,7 @@ public class SimpleHero {
 
     @Override
     public String toString() {
-        return name;
+        return this.name;
     }
 
     public boolean isDead() {
