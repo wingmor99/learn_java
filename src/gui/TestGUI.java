@@ -33,3 +33,5 @@ public class TestGUI {
         f.setVisible(true);
     }
 }
+
+// 界面组件：https://how2j.cn/k/gui/gui-component/407.html#nowhere
