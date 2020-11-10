@@ -13,9 +13,9 @@ public class TestGUI {
         // 绝对定位，所有组件都要指定位置和大小
         f.setLayout(null);
 
-        // 设置布局器为BorderLayerout
-        // 容器上的组件按照上北下南左西右东中的顺序摆放
-        f.setLayout(new BorderLayout());
+        // 设置布局器为GridLayerout，即网格布局器
+        // 该GridLayerout的构造方法表示该网格是2行3列
+        f.setLayout(new GridLayout(2, 3));
 
         JButton b1 = new JButton("洪七");
         JButton b2 = new JButton("段智兴");
@@ -23,15 +23,13 @@ public class TestGUI {
         JButton b4 = new JButton("黄药师");
         JButton b5 = new JButton("周伯通");
 
-        // 加入到容器的时候，需要指定位置
-        f.add(b1, BorderLayout.NORTH);
-        f.add(b2, BorderLayout.SOUTH);
-        f.add(b3, BorderLayout.WEST);
-        f.add(b4, BorderLayout.EAST);
-        f.add(b5, BorderLayout.CENTER);
+        f.add(b1);
+        f.add(b2);
+        f.add(b3);
+        f.add(b4);
+        f.add(b5);
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         f.setVisible(true);
     }
 }
